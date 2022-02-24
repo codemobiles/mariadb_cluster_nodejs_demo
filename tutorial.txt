@@ -1,14 +1,14 @@
-# Prepare credential 
+MariaDB-Galera-Cluster-bitnami
+https://github.com/bitnami/bitnami-do...
 my_mariabackup_user = lekAdmin
 my_mariabackup_password = 123123
 my_root_password = ROOTlek152
 my_user = myUser
 my_password = 123123
 
-# pull 
 docker pull bitnami/mariadb-galera:latest
 
-# Step 1: Bootstrap the cluster
+Step 1: Bootstrap the cluster
 
 docker run --name mariadb-galera-0 \
   -p 23300:3306 \
@@ -27,7 +27,7 @@ docker run --name mariadb-galera-0 \
   -d bitnami/mariadb-galera:latest
 
 
-# Step 2: Add nodes to the cluster (1,2,3)
+# Step 2: Add nodes to the cluster (1,2,3,4)
 
 docker run --name mariadb-galera-1 --link mariadb-galera-0:mariadb-galera \
   -p 23301:3306 \
@@ -77,8 +77,7 @@ docker exec -it mariadb-galera-1 /bin/bash
 docker exec -it mariadb-galera-2 /bin/bash
 
 # shell testing (must wait to finish setting)
-mysql -u myUser -p
-123123
+mysql -u myUser -p 123123
 
 # show cluster info
 SHOW STATUS LIKE '%cluster%';
@@ -93,8 +92,7 @@ SELECT user FROM mysql.user GROUP BY user;
 show databases;
 use my_database;
 CREATE TABLE example ( id smallint unsigned not null auto_increment, name varchar(20) not null, constraint pk_example primary key (id) );
-INSERT INTO example ( id, name ) VALUES ( null, 'Sample data 1' );
-INSERT INTO example ( id, name ) VALUES ( null, 'Sample data 2' );
+INSERT INTO example ( id, name ) VALUES ( null, 'Hey CodeMobiles' );
 select * from example;
 
 
