@@ -75,9 +75,11 @@ echo $NODE_NAME
 docker exec -it mariadb-galera-0 /bin/bash
 docker exec -it mariadb-galera-1 /bin/bash
 docker exec -it mariadb-galera-2 /bin/bash
+docker exec -it mariadb-galera-3 /bin/bash
 
 # shell testing (must wait to finish setting)
-mysql -u myUser -p 123123
+mysql -u myUser -p 
+123123
 
 # show cluster info
 SHOW STATUS LIKE '%cluster%';
@@ -99,13 +101,14 @@ select * from example;
 use my_database;
 select * from example;
 
+docker stop mariadb-galera-3
 docker stop mariadb-galera-2
 docker stop mariadb-galera-1
 docker stop mariadb-galera-0
 
-docker rm mariadb-galera-2 mariadb-galera-1 mariadb-galera-0 -f
-
+docker rm mariadb-galera-3 mariadb-galera-2 mariadb-galera-1 mariadb-galera-0 -f
 
 docker restart mariadb-galera-0
 docker restart mariadb-galera-1
 docker restart mariadb-galera-2
+docker restart mariadb-galera-3
